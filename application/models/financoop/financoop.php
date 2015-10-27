@@ -91,11 +91,11 @@ class Financoop extends CI_Model{
                if($tabla=="mes_deuda"):
                     if($key_==6):
                         else:
-                        $data.="'".utf8_encode(f_remove_odd_characters($value_))."',";
+                        $data.="'".f_remove_odd_characters($value_)."',";
                     
                     endif;
                else:
-               $data.="'".utf8_encode(f_remove_odd_characters($value_))."',";
+               $data.="'".f_remove_odd_characters($value_)."',";
                endif;
                
             }
@@ -192,11 +192,11 @@ class Financoop extends CI_Model{
                if($tabla=="mes_deuda"):
                     if($key_==6):
                         else:
-                        $data.="'".utf8_encode(f_remove_odd_characters($value_))."',";
+                        $data.="'".f_remove_odd_characters($value_)."',";
                     
                     endif;
                else:
-               $data.="'".utf8_encode(f_remove_odd_characters($value_))."',";
+               $data.="'".f_remove_odd_characters($value_)."',";
                endif;
                
             }

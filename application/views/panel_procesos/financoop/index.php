@@ -51,6 +51,9 @@ and open the template in the editor.
         <script>
             $("#paso1").on("click",function(e)
         {
+            
+          //  $("#Interfaz").toggleClass("hidden");
+          //  $("#carbdd").toggleClass("hidden");
             $.post( "<?= base_url("c_p/financoop_interfaz");?>", function( data ) {
   $( ".contenedor-datos-ajax" ).html( data );
 });
