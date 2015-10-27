@@ -97,7 +97,7 @@ border-color: #646C74 !important;background-image:none !important;}
        $("#total").trigger("click");
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) {
-    $( ".out-info-importar" ).html( data );
+    $( ".out-info-importar" ).html( errorThrown );
   }
 });
         })  ; 
@@ -116,7 +116,7 @@ border-color: #646C74 !important;background-image:none !important;}
        $("#total").trigger("click");
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) {
-    $( ".out-info-mes" ).html( data );
+    $( ".out-info-mes" ).html( errorThrown );
   }
 });
              

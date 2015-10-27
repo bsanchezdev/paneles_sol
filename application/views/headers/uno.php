@@ -3,6 +3,7 @@
                 <div class="col-md-12" >
                 <img src="<?=base_url("/imagenes/header.png")?>" style="width: 100%; height: 120px;" />
                 </div>    
+              <!--  <div style="position:relative"><img src="<?= base_url("/imagenes/logo.jpg");?>" width="156" height="102" alt="logo"/></div> -->
             </div>
             <p>
                 

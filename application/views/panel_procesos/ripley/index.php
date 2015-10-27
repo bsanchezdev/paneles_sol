@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>FINANCOOP</title>
+        <title>RIPLEY</title>
         <?= load_bootstrap_css();?>
     </head>
     <body>
@@ -18,7 +18,7 @@ and open the template in the editor.
                 <div class="col-md-12">
         <div class="panel panel-default">
         <div class="panel-heading">
- <h3 class="panel-title"><i class="fa fa-dashboard">&nbsp;</i>Carga SITREL FINANCOOP</h3>
+        <h3 class="panel-title"><i class="fa fa-dashboard">&nbsp;</i>Carga SITREL BANCO RIPLEY</h3>
         </div>
         <div class="panel-body">
             
@@ -26,7 +26,7 @@ and open the template in the editor.
         </div>
             <div class="row container" >
                 
-        <div class="col-md-4 col-lg-4 col-xs-4">
+        <div class="col-md-4">
         <ul class="list-group">
             <li class="list-group-item"><a class="btn btn-default form-control" id="paso1" href="#"><i class="fa fa-gears">&nbsp;</i>Interfaz&nbsp;<i id="Interfaz" class="fa fa-check hidden">&nbsp;</i></a></li>
             <li class="list-group-item"><a class="btn btn-default form-control" id="paso2" href="#" style="height: 53px;"><i class="fa fa-database">&nbsp;</i>GENERA CARBDD&nbsp;<i id="carbdd" class="fa fa-check hidden">&nbsp;</i></a></li>
@@ -81,8 +81,8 @@ and open the template in the editor.
       $("#carbdd").toggleClass("hidden");
       $( ".contenedor-datos-ajax" ).html( data );
   },
-  error: function(XMLHttpRequest, textStatus, errorThrown) { 
-    $( ".contenedor-datos-ajax" ).html( errorThrown );
+  error: function(XMLHttpRequest, textStatus, errorThrown) {
+    $( ".contenedor-datos-ajax" ).html( data );
   }
 });
   /*  
