@@ -1,5 +1,6 @@
 <?php
 function f_remove_odd_characters($string){
+    ini_set('max_execution_time', -1);
        // these odd characters appears usually 
        // when someone copy&paste from MSword to an HTML form
        $string = str_replace("\n","[NEWLINE]",$string);

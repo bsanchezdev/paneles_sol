@@ -18,15 +18,19 @@ class Ripley_c extends CI_Controller{
         $this->load->model("ripley/ripley");
                  $this->load->helper("caracteres");
                  $this->load->helper("file");
+                 $this->load->helper("sql_construct");
     }
     
     public function index() {
         $data="";
         $this->load->view("panel_procesos/ripley/index",$data);}
     
-    public function proces_1($periodo="") {
+    public function proces_1($periodo="",$fechacarga="") {
          
-      $this->ripley->proces_1();
+     if( $this->ripley->proces_1() && $periodo !="" ):
+         $this->periodo($periodo);
+        $this->ripley->cuadratura($fechacarga);
+     endif;
         
     }
     
@@ -37,6 +41,6 @@ class Ripley_c extends CI_Controller{
     
     public function periodo($periodo)
     {
-        $this->ripley->periodo_proc($periodo);
+      $data=  $this->ripley->periodo_proc($periodo);
     }
 }

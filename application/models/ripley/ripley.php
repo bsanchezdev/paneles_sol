@@ -20,6 +20,9 @@ class Ripley extends CI_Model {
           $this->db_ripley_sitrel   = $this->load
                                         ->database('ripley_sitrel', TRUE)   ;
           
+          $this->db_CNB             = $this->load
+                                        ->database('CNB', TRUE)   ;
+          
           
     }
     
@@ -308,12 +311,14 @@ HAVING
         $this->db_ripley_sitrel->query($this->base_telefonos_celu)      ;
         $this->db_ripley_sitrel->truncate("base_telefonos_formato")     ;
         $this->db_ripley_sitrel->query($this->base_telefonos_formato)   ;
+       
         
         if ($this->db_ripley_sitrel->trans_status() === FALSE)
 		{			
 			//si ha habido algún error lo debemos mostrar aquí
             echo "error en process_1";
-                        $this->db_ripley_sitrel->trans_rollback();			
+                        $this->db_ripley_sitrel->trans_rollback();	
+                        return false;
 		}else{
 			// echo "OK en process_1";
 			//en otro caso todo ha ido bien
@@ -321,7 +326,50 @@ HAVING
                         $this->carbdd();
                         $this->cardir();
                         $this->tmovil();
+                        return true;
 		}
+    }
+    
+    public function cuadratura($fechacarga="nodef")
+    {
+         $this->db_CNB->trans_begin()                          ;
+         $this->db_CNB->truncate("CUADRATURA_BANCO_RIPLEY");
+         $query_cuadratura='SELECT
+	BASE_DEUDA.RUT,
+	BASE_DEUDA.OPERACION,
+	BASE_DEUDA.CUOTA,
+	BASE_DEUDA.MONTO,
+	"BANCO RIPLEY" AS Expr1,
+	"'.$fechacarga.'" AS Expr2
+FROM
+	BASE_DEUDA;';
+         
+         $query = $this->db_ripley_sitrel->query($query_cuadratura) ;
+    $adata=$query->result_array() ;
+    
+   // var_dump($data);
+   $datos_array= construir_array_de_inserts($adata,"CUADRATURA_BANCO_RIPLEY");
+   
+   
+                
+   foreach ($datos_array as $key => $value) {
+       $this->db_CNB->query($value);
+       if ($this->db_CNB->trans_status() === FALSE)
+		{			
+			//si ha habido algún error lo debemos mostrar aquí
+            echo '<p><div class="label label-danger">Error en insert CUADRATURA</div>';
+            echo $this->db_CNB->last_query();
+                        $this->db_CNB->trans_rollback();	
+                        //return false;
+		}else{
+			// echo "OK en process_1";
+			//en otro caso todo ha ido bien
+			$this->db_CNB->trans_commit();
+                        $this->db_CNB->trans_begin()                          ;
+                           //echo '<p><div class="label label-success">CUADRATURA OK</div>';
+                        //return true;
+		}
+   }
     }
     
 public function carbdd() {
@@ -378,7 +426,8 @@ else
 	BASE_CEDENTE.Percast,
 	BASE_CEDENTE.TipoProducto,
 	BASE_CEDENTE.NroOperacion,
-	BASE_CEDENTE.Rut/Dv, BASE_CEDENTE.Rut,
+	BASE_CEDENTE.`Rut/Dv`, 
+        BASE_CEDENTE.Rut,
 	BASE_CEDENTE.Dv,
 	BASE_CEDENTE.Tipo_Cobrador,
 	BASE_CEDENTE.Cobrador,
@@ -446,25 +495,17 @@ FROM
 	BASE_CEDENTE;";
         
         $query = $this->db_ripley_sitrel->query($query) ;
-    $data=$query->result_array() ;
+    $adata=$query->result_array() ;
     
    // var_dump($data);
+   $datos_array= construir_array_de_inserts($adata,"BANCO_RIPLEY_ASIGNACION");
     
-    
-    foreach ($data as $key => $value) {
-        $data.="(";
-        foreach ($value as $key_ => $value_) {
-               $value_=  str_replace("'", '´', $value_);
-                              
-               $data.="'".f_remove_odd_characters($value_)."',";
-              
-               
-            }
-            $data=trim($data,",");
-            $data=$data.")," ;
-             
-          
-         $data=htmlspecialchars($data);
-    }
+   foreach ($datos_array as $key => $value) {
+       $this->db_saturno->query($value);
+   }
+   
+   
+   
+    return $datos_array;
     }
 }

@@ -13,6 +13,7 @@ and open the template in the editor.
     <body>
         <div class="container">
             <?php $this->load->view("headers/uno.php");?>
+            
             <div class="row">
                 
                 <div class="col-md-12">
@@ -27,6 +28,9 @@ and open the template in the editor.
             <div class="row container" >
                 
         <div class="col-md-4 col-lg-4 col-xs-4">
+        <div class="row">
+                <div class="col-md-12 col-xs-12"><img src="<?= base_url("/imagenes/financoop/logo-financoop.jpg"); ?>" width="322" height="81" alt="logo-financoop"/></div>
+        </div>    
         <ul class="list-group">
             <li class="list-group-item"><a class="btn btn-default form-control" id="paso1" href="#"><i class="fa fa-gears">&nbsp;</i>Interfaz&nbsp;<i id="Interfaz" class="fa fa-check hidden">&nbsp;</i></a></li>
             <li class="list-group-item"><a class="btn btn-default form-control" id="paso2" href="#" style="height: 53px;"><i class="fa fa-database">&nbsp;</i>GENERA CARBDD&nbsp;<i id="carbdd" class="fa fa-check hidden">&nbsp;</i></a></li>
@@ -46,6 +50,11 @@ and open the template in the editor.
             </div>
             
         </div>
+        <footer>
+        <div class="container"> 
+          <?php $this->load->view("footer/footer1.php");?>
+        </div>
+        </footer>
         <?= load_bootstrap_js();?>
         
         <script>

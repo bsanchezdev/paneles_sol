@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Indice Ejemplos</title>
+        <title>PANEL DE APLICACIONES</title>
         <?=load_bootstrap_css();?>
         <style>
             .active_a {
@@ -34,10 +34,14 @@ and open the template in the editor.
 
             <!-- -->
             
-            <div class="contenedor-datos-ajax row " style="width: 101.3%;min-height: 550px; background-image: url(<?=base_url("imagenes/3ds_website-background-tiled_100.jpg")?>)">
-               <!-- <img src="<?=base_url("imagenes/3ds_website-background-tiled_100.jpg")?>" style="width:100%"/> -->
-
+            <div class="contenedor-datos-ajax row " style="width: 101.3%;min-height: 540px; background-image: url(<?=base_url("imagenes/3ds_website-background-tiled_100.jpg")?>)">
+           
             </div>
+            
+            
+        </div>
+        <div class="container"> 
+          <?php $this->load->view("footer/footer1.php");?>
         </div>
             <?=load_bootstrap_js();?>
 </body>
