@@ -95,14 +95,14 @@ $db['mysqli'] = array(
 	'save_queries' => TRUE
 );
 
-//no recomendable
-$db['mssql'] = array(
-	//'dsn'	=> 'Driver={SQL Server Native Client 10.0};Server=ORBITA;Database=sitrel_cs;',//'',//Driver={SQL Server Native Client 10.0};Server=orbita;Database=sitrel_rec;
-	'hostname' => 'ORBITA',
-	'username' => 'sa',
-	'password' => 'octubre',
-	'database' => 'Sitrel_Cs',
-	'dbdriver' => 'mssql',//mysqli',
+
+$db['ripley_sitrel'] = array(
+	'dsn'	=> '',
+	'hostname' => 'naboo',
+	'username' => 'desarrollo',
+	'password' => 'solvencia',
+	'database' => 'ripley_sitrel',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
@@ -117,6 +117,7 @@ $db['mssql'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
 
 $db['odbc']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=naboo;Database=CEDENTES;';
 $db['odbc']['username'] = 'sa';
@@ -134,42 +135,6 @@ $db['odbc']['swap_pre'] = '';
 $db['odbc']['autoinit'] = TRUE;
 $db['odbc']['stricton'] = FALSE;
 $db['odbc']['schema']   = "dbo";
-/*
-$db['odbc']['hostname'] = 'Driver={SQL Server};Server=orbita;Database=Sitrel_Cs; Uid=sa;Pwd=octubre;';
-$db['odbc']['username'] = 'sa';
-$db['odbc']['password'] = 'octubre';
-$db['odbc']['database'] = 'Sitrel_Cs';
-$db['odbc']['dbdriver'] = 'odbc';
-$db['odbc']['dbprefix'] = '';
-$db['odbc']['pconnect'] = TRUE;
-$db['odbc']['db_debug'] = TRUE;
-$db['odbc']['cache_on'] = FALSE;
-$db['odbc']['cachedir'] = '';
-$db['odbc']['char_set'] = 'utf8';
-$db['odbc']['dbcollat'] = 'utf8_general_ci';
-$db['odbc']['swap_pre'] = '';
-$db['odbc']['autoinit'] = TRUE;
-$db['odbc']['stricton'] = FALSE;
-*/
-
-
-//deprecated
-$db['mysql']['hostname'] = "199.69.69.3";
-$db['mysql']['username'] = "desarrollo" ;
-$db['mysql']['password'] = "solvenciadesarrollo" ;
-$db['mysql']['database'] = "curso_php";
-$db['mysql']['port'] = "3306" ;
-$db['mysql']['dbdriver'] = 'mysql';
-$db['mysql']['dbprefix'] = '';
-$db['mysql']['pconnect'] = FALSE;
-$db['mysql']['db_debug'] = FALSE;
-$db['mysql']['cache_on'] = FALSE;
-$db['mysql']['cachedir'] = '';
-$db['mysql']['char_set'] = 'utf8';
-$db['mysql']['dbcollat'] = 'utf8_general_ci';
-$db['mysql']['swap_pre'] = '';
-$db['mysql']['autoinit'] = TRUE;
-$db['mysql']['stricton'] = FALSE;
 
 
 $db['operaciones']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=saturno;Database=OPERACIONES;';
@@ -188,3 +153,21 @@ $db['operaciones']['swap_pre'] = '';
 $db['operaciones']['autoinit'] = TRUE;
 $db['operaciones']['stricton'] = FALSE;
 $db['operaciones']['schema']   = "dbo";
+
+
+$db['CNB']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=naboo;Database=CNB;';
+$db['CNB']['username'] = 'sa';
+$db['CNB']['password'] = 'One2Three';
+$db['CNB']['database'] = 'CNB';
+$db['CNB']['dbdriver'] = 'odbc';
+$db['CNB']['dbprefix'] = '';
+$db['CNB']['pconnect'] = FALSE;
+$db['CNB']['db_debug'] = TRUE;
+$db['CNB']['cache_on'] = FALSE;
+$db['CNB']['cachedir'] = '';
+$db['CNB']['char_set'] = 'utf8';
+$db['CNB']['dbcollat'] = 'utf8_general_ci';
+$db['CNB']['swap_pre'] = '';
+$db['CNB']['autoinit'] = TRUE;
+$db['CNB']['stricton'] = FALSE;
+$db['CNB']['schema']   = "dbo";

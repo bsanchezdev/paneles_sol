@@ -25,7 +25,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PROCESOS <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="<?= base_url("/c_p/financoop");?>"><i class="fa fa-circle">&nbsp;</i>FINANCOOP</a></li>
-                  <li><a href="<?= base_url("/c_p/ripley");?>"><i class="fa fa-circle">&nbsp;</i>RIPLEY</a></li>
+                  <li><a href="<?= base_url("/c_p/ripley_c");?>"><i class="fa fa-circle">&nbsp;</i>RIPLEY</a></li>
                   <li><a href="<?= base_url("/c_p/santander_terreno");?>"><i class="fa fa-circle">&nbsp;</i>SANTANDER</a></li>
                   <li><a href="<?= base_url("/c_p/uvm");?>"><i class="fa fa-circle">&nbsp;</i>UVM</a></li>
                 </ul>

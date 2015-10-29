@@ -28,7 +28,7 @@ and open the template in the editor.
                 
         <div class="col-md-4">
         <ul class="list-group">
-            <li class="list-group-item"><a class="btn btn-default form-control" id="paso1" href="#"><i class="fa fa-gears">&nbsp;</i>Interfaz&nbsp;<i id="Interfaz" class="fa fa-check hidden">&nbsp;</i></a></li>
+            <li class="list-group-item"><a class="btn btn-default form-control" id="paso1" href="#"><i class="fa fa-gears">&nbsp;</i>Paso 1&nbsp;<i id="Interfaz" class="fa fa-check hidden">&nbsp;</i></a></li>
             <li class="list-group-item"><a class="btn btn-default form-control" id="paso2" href="#" style="height: 53px;"><i class="fa fa-database">&nbsp;</i>GENERA CARBDD&nbsp;<i id="carbdd" class="fa fa-check hidden">&nbsp;</i></a></li>
            
         </ul>
@@ -36,7 +36,7 @@ and open the template in the editor.
                 
                 
                 <div class="col-md-8 contenedor-datos-ajax">
-                    
+                    <div class="progr" style="height: 20px; width:100px"></div>
                 </div>
             </div>
         </div>
@@ -52,11 +52,43 @@ and open the template in the editor.
             $("#paso1").on("click",function(e)
         {
             
-          //  $("#Interfaz").toggleClass("hidden");
-          //  $("#carbdd").toggleClass("hidden");
-            $.post( "<?= base_url("c_p/financoop_interfaz");?>", function( data ) {
-  $( ".contenedor-datos-ajax" ).html( data );
+            $.ajax({
+  type: "POST",
+  url: "<?= base_url("c_p/ripley_c/modal_periodo");?>/",
+  data: "",
+  success: function(data){
+      $("#carbdd").toggleClass("hidden");
+      $( ".contenedor-datos-ajax" ).append( data );
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) {
+    $( ".contenedor-datos-ajax" ).append( data );
+  }
 });
+            $(".progr" ).html('<img src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+            $.ajax({
+  type: "POST",
+  url: "<?= base_url("c_p/ripley_c/proces_1");?>/",
+  data: "",
+  success: function(data){
+     
+      $( ".contenedor-datos-ajax" ).html( data );
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) {
+    $( ".contenedor-datos-ajax" ).html( errorThrown + XMLHttpRequest.responseText);
+  }
+});
+          
+            
           
             e.preventDefault();
         })  ; 
