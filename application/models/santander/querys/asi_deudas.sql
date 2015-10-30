@@ -1,5 +1,4 @@
-
-        INSERT INTO ASI_DEUDAS SELECT	
+INSERT INTO ASI_DEUDAS SELECT	
 	ASI_ORIGINAL_DEUDAS.Rut_Cliente AS Rut_Cliente,
 	ASI_ORIGINAL_DEUDAS.Dv,
 	ASI_ORIGINAL_DEUDAS.NUMOPE,
@@ -20,10 +19,8 @@
 	ASI_ORIGINAL_DEUDAS.POSICION_TOTAL,
 	ASI_ORIGINAL_DEUDAS.PLAZO_CREDITO,
 	ASI_ORIGINAL_DEUDAS.CICLO_REBAJE,
-
 DATE_FORMAT(
-adddate(
-STR_TO_DATE(concat (
+adddate(STR_TO_DATE(concat (
 		RIGHT (
 			 ASI_ORIGINAL_DEUDAS.Fecha_Vencimiento , 2
 		) , '-' , Mid(
@@ -32,8 +29,7 @@ STR_TO_DATE(concat (
 		) , '-' , LEFT (
 			 ASI_ORIGINAL_DEUDAS.Fecha_Vencimiento , 4
 		)
-	), '%d-%m-%Y'),%dias_para_vencimiento%),'%d/%m/%Y')
-	  AS Fecha_de_Vencimiento 
+	), '%d-%m-%Y'),%dias_para_vencimiento%),'%d/%m/%Y') AS Fecha_de_Vencimiento 
 FROM
 	ASI_ORIGINAL_DEUDAS
 WHERE
