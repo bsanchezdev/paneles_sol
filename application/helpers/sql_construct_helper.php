@@ -34,3 +34,24 @@ function construir_array_de_inserts($adata=null,$tabla=null,$insert="INSERT INTO
         return false                ;
     endif;
 }
+
+
+function load_query_file($path,$vars=array())
+{
+    
+    /*Cargamos las querys desde un archivo sql y seteamos las variables definidas en el array vars*/
+    $model_path=APPPATH."models";
+        $query = read_file( $path );    
+        
+        foreach ($vars as $key => $value) {
+            $query =str_replace
+                (
+                $key, 
+                $value, 
+                $query 
+                );   
+        }
+        
+        
+        return $query;
+}

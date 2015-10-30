@@ -74,13 +74,13 @@ class Financoop_interfaz extends CI_Controller{
         //var_dump($listado);
        foreach ($listado as $key => $value) {
            if(strpos($key, "MES")):
-           $flags[]="Aval";
-           $flags[]="Cuotas";
-           $flags[]="Deuda";
-           $flags[]="Direccion";
-           $flags[]="Pagos";
-           $flags[]="Socios";
-           $flags[]="Telefonos";
+           $flags[0]="Aval"         ;
+           $flags[1]="Cuotas"       ;
+           $flags[2]="Deuda"        ;
+           $flags[3]="Direccion"    ;
+           $flags[4]="Pagos"        ;
+           $flags[5]="Socios"       ;
+           $flags[6]="Telefonos"    ;
            
            $flag="";
            foreach ($flags as $key_ => $value_) {
