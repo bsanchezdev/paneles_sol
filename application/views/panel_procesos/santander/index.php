@@ -56,19 +56,7 @@ and open the template in the editor.
         <?= load_bootstrap_js();?>
         
         <script>
-            $("#paso1").on("click",function(e)
-        {
-            
-          //  $("#Interfaz").toggleClass("hidden");
-          //  $("#carbdd").toggleClass("hidden");
-            $.post( "<?= base_url("c_p/financoop_interfaz");?>", function( data ) {
-  $( ".contenedor-datos-ajax" ).html( data );
-});
           
-            e.preventDefault();
-        })  ; 
-        
-        
         
         $("#init").on("click",function(e)
         {
@@ -76,7 +64,7 @@ and open the template in the editor.
             var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
             $(".contenedor-datos-ajax").html(cod);
             $("#p2").css("display","block");
-             $(".outputpaso" ).html('<span>&nbsp;Procesando base de entrada...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+            $(".outputpaso" ).html('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
            
     
     
@@ -85,11 +73,17 @@ and open the template in the editor.
   url: "<?= base_url("c_p/santander_c/paso_1");?>/",
   data: "",
   success: function(data){
-      $("#carbdd").toggleClass("hidden");
+    //  $("#carbdd").toggleClass("hidden");
       $( ".contenedor-datos-ajax" ).html( data );
+      var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
+            $(".contenedor-datos-ajax").append(cod);
+            $("#p2").css("display","block");
+             $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+           
+      paso_2();
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) { 
-    $( ".contenedor-datos-ajax" ).html( errorThrown );
+    $( ".contenedor-datos-ajax" ).append(XMLHttpRequest.responseText)           ; 
   }
 });
   /*  
@@ -99,6 +93,52 @@ and open the template in the editor.
           
             e.preventDefault();
         })  ; 
+        
+        function paso_2()
+        {
+            //$this->db_santander->truncate("base_deuda")    
+   $.ajax({
+  type: "POST",
+  url: "<?= base_url("c_p/santander_c/paso_2");?>/",
+  data: "",
+  success: function(data){
+   //   $("#carbdd").toggleClass("hidden");
+   $(".outputpaso" ).html();$(".outputpaso" ).empty(); $(".outputpaso" ).remove();
+   $("#p2" ).html();$("#p2" ).empty(); $("#p2" ).remove();
+   
+   
+      $( ".contenedor-datos-ajax" ).append( data );
+     //  $( ".contenedor-datos-ajax" ).html( data );
+      var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
+           // $(".contenedor-datos-ajax").append(cod);
+            $("#p2").css("display","block");
+             $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+           
+      paso_3();
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) { 
+    $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
+  }
+});                                                      ;
+        }
+        
+        function paso_3()
+        {
+            //$this->db_santander->truncate("base_deuda")    
+   $.ajax({
+  type: "POST",
+  url: "<?= base_url("c_p/santander_c/paso_3");?>/",
+  data: "",
+  success: function(data){
+   //   $("#carbdd").toggleClass("hidden");
+      $( ".contenedor-datos-ajax" ).append( data );
+      
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) { 
+    $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
+  }
+});                                                      ;
+        }
         </script>
     </body>
 </html>

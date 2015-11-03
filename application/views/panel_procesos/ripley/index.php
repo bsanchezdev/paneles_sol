@@ -69,7 +69,7 @@ and open the template in the editor.
       $( ".contenedor-datos-ajax" ).append( data );
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) {
-    $( ".contenedor-datos-ajax" ).append( data );
+    $( ".contenedor-datos-ajax" ).append( errorThrown );
   }
 });
            
@@ -100,7 +100,7 @@ and open the template in the editor.
       $( ".contenedor-datos-ajax" ).html( data );
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) {
-    $( ".contenedor-datos-ajax" ).html( data );
+    $( ".contenedor-datos-ajax" ).html( errorThrown );
   }
 });
   /*  
