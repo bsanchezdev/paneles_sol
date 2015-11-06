@@ -11,7 +11,7 @@ and open the template in the editor.
         <?= load_bootstrap_css();?>
     </head>
     <body>
-        <div class="container">
+        <div class="container" style="padding-bottom: 100px;">
             <?php $this->load->view("headers/uno.php");?>
             
             <div class="row">
@@ -125,19 +125,99 @@ and open the template in the editor.
         function paso_3()
         {
             //$this->db_santander->truncate("base_deuda")    
-   $.ajax({
+  /* $.ajax({
   type: "POST",
   url: "<?= base_url("c_p/santander_c/paso_3");?>/",
   data: "",
   success: function(data){
    //   $("#carbdd").toggleClass("hidden");
+      $( ".contenedor-datos-ajax" ).append( data );      
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) { 
+    $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
+  }
+});  */                                                    
+    
+    $.ajax({
+  type: "POST",
+  url: "<?= base_url("c_p/santander_c/paso_3");?>/",
+  data: "",
+  success: function(data){
+   //   $("#carbdd").toggleClass("hidden");
+   $(".outputpaso" ).html();$(".outputpaso" ).empty(); $(".outputpaso" ).remove();
+   $("#p2" ).html();$("#p2" ).empty(); $("#p2" ).remove();
+   
+   
       $( ".contenedor-datos-ajax" ).append( data );
+     //  $( ".contenedor-datos-ajax" ).html( data );
+      var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
+           // $(".contenedor-datos-ajax").append(cod);
+            $("#p2").css("display","block");
+             $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+           
+      paso_4();
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) { 
+    $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
+  }
+}); 
+        }
+        
+        
+         function paso_4()
+        {
+       
+       $.ajax({
+  type: "POST",
+  url: "<?= base_url("c_p/santander_c/paso_4");?>/",
+  data: "",
+  success: function(data){
+   //   $("#carbdd").toggleClass("hidden");
+   $(".outputpaso" ).html();$(".outputpaso" ).empty(); $(".outputpaso" ).remove();
+   $("#p2" ).html();$("#p2" ).empty(); $("#p2" ).remove();
+   
+   
+      $( ".contenedor-datos-ajax" ).append( data );
+     //  $( ".contenedor-datos-ajax" ).html( data );
+      var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
+           // $(".contenedor-datos-ajax").append(cod);
+            $("#p2").css("display","block");
+             $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+           
+      paso_5();
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) { 
+    $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
+  }
+}); 
+        }
+        
+        function paso_5()
+        {
+            $.ajax({
+  type: "POST",
+  url: "<?= base_url("c_p/santander_c/paso_5");?>/",
+  data: "",
+  success: function(data){
+   //   $("#carbdd").toggleClass("hidden");
+   $(".outputpaso" ).html();$(".outputpaso" ).empty(); $(".outputpaso" ).remove();
+   $("#p2" ).html();$("#p2" ).empty(); $("#p2" ).remove();
+   
+   
+      $( ".contenedor-datos-ajax" ).append( data );
+     //  $( ".contenedor-datos-ajax" ).html( data );
+      var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
+           // $(".contenedor-datos-ajax").append(cod);
+            $("#p2").css("display","block");
+             $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+           
       
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) { 
     $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
   }
-});                                                      ;
+}); 
+            
         }
         </script>
     </body>

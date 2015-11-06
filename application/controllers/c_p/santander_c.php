@@ -17,6 +17,18 @@ class Santander_c extends CI_Controller{
    var $ruta_telefonos_bn1  =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\BN1\TMOVIL.CSV";
    
    
+   var $ruta_cbdd_bnf       =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\BNF\CARBDD.CSV";
+   var $ruta_direccion_bnf  =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\BNF\CARDIR.CSV";
+   var $ruta_telefonos_bnf  =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\BNF\TMOVIL.CSV";
+   
+   var $ruta_cbdd_st1       =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\ST1\CARBDD.CSV";
+   var $ruta_direccion_st1  =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\ST1\CARDIR.CSV";
+   var $ruta_telefonos_st1  =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\ST1\TMOVIL.CSV";
+   
+   var $ruta_cbdd_std       =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\STD\CARBDD.CSV";
+   var $ruta_direccion_std  =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\STD\CARDIR.CSV";
+   var $ruta_telefonos_std  =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\SANT_TERR_CARSIT\STD\TMOVIL.CSV";
+   
    public function __construct() {
        parent::__construct()                    ;
        $this->load->helper("caracteres")        ;
@@ -49,13 +61,34 @@ class Santander_c extends CI_Controller{
    public function paso_3()
    {
         $this->Santander->proc_bnf();
+        $this->exportar_bnf();
+        $data["data_html"]=$this->data_html               ;
+        $this->load->view("panel_procesos\santander\proc_1",$data)   ;
    }
+   
+   
+   public function paso_4()
+   {
+       $this->Santander->proc_st1();
+       $this->exportar_st1();
+        $data["data_html"]=$this->data_html               ;
+        $this->load->view("panel_procesos\santander\proc_1",$data)   ;
+   }
+   
+   public function paso_5()
+   {
+       $this->Santander->proc_std();
+       $this->exportar_std();
+        $data["data_html"]=$this->data_html               ;
+        $this->load->view("panel_procesos\santander\proc_1",$data)   ;
+   }
+   
    
    protected function exportar_bn1()
    {
      /*exportar carbbd BN1*/
        $this->data_html="";
-       if ( ! write_file($this->ruta_cbdd_bn1, $this->Santander->csv_carbdd_bn1))
+       if ( ! write_file($this->ruta_cbdd_bn1, $this->Santander->csv_carbdd))
 {
      $this->data_html.='<li class="list-group-item">CARBDD BN1 <span class="badge">ERROR</span></li>'      ;
      
@@ -66,7 +99,7 @@ else
    
 }
 
-if ( ! write_file($this->ruta_direccion_bn1, $this->Santander->csv_direccion_bn1))
+if ( ! write_file($this->ruta_direccion_bn1, $this->Santander->csv_direccion))
 {
      $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN BN1 <span class="badge">ERROR</span></li>' ;
 }
@@ -75,7 +108,7 @@ else
     $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN BN1 <span class="badge">OK</span></li>' ;
 }
 
-if ( ! write_file($this->ruta_telefonos_bn1, $this->Santander->csv_telefonos_bn1))
+if ( ! write_file($this->ruta_telefonos_bn1, $this->Santander->csv_telefonos))
 {
     $this->data_html.= '<li class="list-group-item">CARBDD TELËFONOS BN1 <span class="badge">ERROR</span></li>' ;
 }
@@ -86,4 +119,108 @@ else
 /* fin carbdd bn1 */  
    }
    
+   protected function exportar_bnf()
+   {
+     /*exportar carbbd BN1*/
+       $this->data_html="";
+       if ( ! write_file($this->ruta_cbdd_bnf, $this->Santander->csv_carbdd))
+{
+     $this->data_html.='<li class="list-group-item">CARBDD BNf <span class="badge">ERROR</span></li>'      ;
+     
+}
+else
+{
+    $this->data_html='<li class="list-group-item">CARBDD BNF <span class="badge">OK</span></li>'      ;
+   
+}
+
+if ( ! write_file($this->ruta_direccion_bnf, $this->Santander->csv_direccion))
+{
+     $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN BNF <span class="badge">ERROR</span></li>' ;
+}
+else
+{
+    $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN BNF <span class="badge">OK</span></li>' ;
+}
+
+if ( ! write_file($this->ruta_telefonos_bnf, $this->Santander->csv_telefonos))
+{
+    $this->data_html.= '<li class="list-group-item">CARBDD TELËFONOS BNF <span class="badge">ERROR</span></li>' ;
+}
+else
+{
+   $this->data_html.= '<li class="list-group-item">CARBDD TELÉFONOS BNF <span class="badge">OK</span></li>' ;
+}  
+/* fin carbdd bn1 */  
+   }
+   
+    protected function exportar_st1()
+   {
+     /*exportar carbbd BN1*/
+       $this->data_html="";
+       if ( ! write_file($this->ruta_cbdd_st1, $this->Santander->csv_carbdd))
+{
+     $this->data_html.='<li class="list-group-item">CARBDD ST1 <span class="badge">ERROR</span></li>'      ;
+     
+}
+else
+{
+    $this->data_html='<li class="list-group-item">CARBDD ST1 <span class="badge">OK</span></li>'      ;
+   
+}
+
+if ( ! write_file($this->ruta_direccion_st1, $this->Santander->csv_direccion))
+{
+     $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN ST1 <span class="badge">ERROR</span></li>' ;
+}
+else
+{
+    $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN ST1 <span class="badge">OK</span></li>' ;
+}
+
+if ( ! write_file($this->ruta_telefonos_st1, $this->Santander->csv_telefonos))
+{
+    $this->data_html.= '<li class="list-group-item">CARBDD TELËFONOS ST1 <span class="badge">ERROR</span></li>' ;
+}
+else
+{
+   $this->data_html.= '<li class="list-group-item">CARBDD TELÉFONOS ST1 <span class="badge">OK</span></li>' ;
+}  
+/* fin carbdd bn1 */  
+   }
+   
+    protected function exportar_std()
+   {
+     /*exportar carbbd BN1*/
+       $this->data_html="";
+       if ( ! write_file($this->ruta_cbdd_std, $this->Santander->csv_carbdd))
+{
+     $this->data_html.='<li class="list-group-item">CARBDD STD <span class="badge">ERROR</span></li>'      ;
+     
+}
+else
+{
+    $this->data_html='<li class="list-group-item">CARBDD STD <span class="badge">OK</span></li>'      ;
+   
+}
+
+if ( ! write_file($this->ruta_direccion_std, $this->Santander->csv_direccion))
+{
+     $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN STD <span class="badge">ERROR</span></li>' ;
+}
+else
+{
+    $this->data_html.= '<li class="list-group-item">CARBDD DIRECCIÓN STD <span class="badge">OK</span></li>' ;
+}
+
+if ( ! write_file($this->ruta_telefonos_std, $this->Santander->csv_telefonos))
+{
+    $this->data_html.= '<li class="list-group-item">CARBDD TELËFONOS STD <span class="badge">ERROR</span></li>' ;
+}
+else
+{
+   $this->data_html.= '<li class="list-group-item">CARBDD TELÉFONOS STD <span class="badge">OK</span></li>' ;
+}  
+/* fin carbdd bn1 */  
+   }
 }

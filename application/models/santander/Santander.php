@@ -12,7 +12,7 @@
  * @author Desarrollo
  */
 class Santander extends CI_Model{
-    
+    var $exportar_deuda=null;
     public function __construct() {
         parent::__construct();
          $this->db_santander = $this->load->database('santander', TRUE);
@@ -259,6 +259,11 @@ class Santander extends CI_Model{
                 $this->model_path.'/santander/querys/base_telefonos_std.sql'
                 );*/
         
+        $this->load_query_export();
+    }
+    
+    public function  load_query_export()
+    {
         $this->exportar_deuda =  load_query_file
                 (
                 $this->model_path.'/santander/querys/exportar_deuda.sql'
@@ -274,7 +279,7 @@ class Santander extends CI_Model{
                 $this->model_path.'/santander/querys/exportar_telefonos.sql'
                 );
     }
-    
+
     public function proc_bn1()
     {
         $this->querys_bn1()                                     ;
@@ -301,7 +306,7 @@ class Santander extends CI_Model{
         
        
         
-        $this->exportaciones_bn1();
+        $this->exportaciones_();
          
         
         /*$this->querys_bnf()                                       ;
@@ -310,19 +315,19 @@ class Santander extends CI_Model{
        // echo "proc2!";
     }
     
-    public function exportaciones_bn1()
+    public function exportaciones_()
     {
         $e_d=$this->db_santander->query($this->exportar_deuda)    ;
         $e_d=$e_d->result_array()            ;
-        $this->csv_carbdd_bn1=generateCsv($e_d);
+        $this->csv_carbdd=generateCsv($e_d);
         
         $e_d=$this->db_santander->query($this->exportar_direccion)    ;
         $e_d=$e_d->result_array()            ;
-        $this->csv_direccion_bn1=generateCsv($e_d);
+        $this->csv_direccion=generateCsv($e_d);
         
         $e_t=$this->db_santander->query($this->exportar_telefonos)    ;
         $e_t=$e_t->result_array()            ;
-        $this->csv_telefonos_bn1=generateCsv($e_t);
+        $this->csv_telefonos=generateCsv($e_t);
         
         
     }
@@ -330,13 +335,17 @@ class Santander extends CI_Model{
     
     public function proc_bnf() {
         $this->querys_bnf();
-        $this->db_santander->truncate("base_deuda")             ;
-        $this->db_santander->query($this->base_deuda_bnf)           ;
+        $this->db_santander->truncate("base_deuda")                             ;
+        $this->db_santander->query($this->base_deuda_bnf)                       ;
         
-        $this->db_santander->truncate("base_direccion")             ;
-        $this->db_santander->query($this->base_direccion_bnf)           ;
+        $this->db_santander->truncate("base_direccion")                         ;
+        $this->db_santander->query($this->base_direccion_bnf)                   ;
         
-        echo "proc_bnf";
+        $this->db_santander->truncate("BASE_TELEFONOS_FORMATO")                 ;
+        $this->db_santander->query($this->base_telefonos_formato_bnf)           ;
+        
+         $this->exportaciones_();
+     //   echo "proc_bnf";
     }
     
     public function querys_bnf()
@@ -350,5 +359,85 @@ class Santander extends CI_Model{
         (
         $this->model_path.'/santander/querys/bnf/base_direccion.sql'
         );
+        
+        $this->base_telefonos_formato_bnf =  load_query_file
+        (
+        $this->model_path.'/santander/querys/bnf/base_telefonos_bnf.sql'
+        );
+        
+        $this->load_query_export();
+    }
+    
+    
+    public function proc_st1()
+    {
+        $this->querys_st1();
+        $this->db_santander->truncate("base_deuda")                             ;
+        $this->db_santander->query($this->base_deuda_st1)                       ;
+        
+        $this->db_santander->truncate("base_direccion")                         ;
+        $this->db_santander->query($this->base_direccion_st1)                   ;
+        
+        $this->db_santander->truncate("BASE_TELEFONOS_FORMATO")                 ;
+        $this->db_santander->query($this->base_telefonos_formato_st1)           ;
+        
+         $this->exportaciones_();
+        
+    }
+    
+    public function querys_st1()
+    {
+         $this->base_deuda_st1 =  load_query_file
+        (
+        $this->model_path.'/santander/querys/st1/base_deuda.sql'
+        );
+        
+        $this->base_direccion_st1 =  load_query_file
+        (
+        $this->model_path.'/santander/querys/st1/base_direccion.sql'
+        );
+        
+        $this->base_telefonos_formato_st1 =  load_query_file
+        (
+        $this->model_path.'/santander/querys/st1/base_telefonos_st1.sql'
+        );
+        
+        $this->load_query_export();
+    }
+    
+    public function proc_std()
+    {
+        $this->querys_std();
+        $this->db_santander->truncate("base_deuda")                             ;
+        $this->db_santander->query($this->base_deuda_std)                       ;
+        
+        $this->db_santander->truncate("base_direccion")                         ;
+        $this->db_santander->query($this->base_direccion_std)                   ;
+        
+        $this->db_santander->truncate("BASE_TELEFONOS_FORMATO")                 ;
+        $this->db_santander->query($this->base_telefonos_formato_std)           ;
+        
+         $this->exportaciones_();
+        
+    }
+    
+     public function querys_std()
+    {
+         $this->base_deuda_std =  load_query_file
+        (
+        $this->model_path.'/santander/querys/std/base_deuda.sql'
+        );
+        
+        $this->base_direccion_std =  load_query_file
+        (
+        $this->model_path.'/santander/querys/std/base_direccion.sql'
+        );
+        
+        $this->base_telefonos_formato_std =  load_query_file
+        (
+        $this->model_path.'/santander/querys/std/base_telefonos_std.sql'
+        );
+        
+        $this->load_query_export();
     }
 }
