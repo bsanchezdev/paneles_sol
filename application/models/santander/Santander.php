@@ -16,6 +16,7 @@ class Santander extends CI_Model{
     public function __construct() {
         parent::__construct();
          $this->db_santander = $this->load->database('santander', TRUE);
+          $this->db_CNB = $this->load->database('CNB', TRUE);
          $this->model_path=APPPATH."models";
     }
     
@@ -439,5 +440,29 @@ class Santander extends CI_Model{
         );
         
         $this->load_query_export();
+    }
+    
+    public function cuadratura($fecha_carga="") {
+        $model_path=APPPATH."models";
+        $variables=array
+            (
+            "%fecha%"   =>  $fecha_carga
+            );
+        $this->sql_data_cuadratura=  load_query_file
+                (
+                $model_path.'/santander/querys/cuadratura/get_data.sql',
+                $variables
+                );
+            $this->db_CNB->truncate("CUADRATURA_BANCO_SANTANDER")                             ;
+            $r_c =   $this->db_santander->query($this->sql_data_cuadratura)                ;
+            $r_c =   $r_c->result_array()                                                  ;
+            
+            
+            $datos_array= construir_array_de_inserts($r_c,"CUADRATURA_BANCO_SANTANDER");
+    
+   foreach ($datos_array as $key => $value) {
+       $this->db_CNB->query($value);
+   }
+   
     }
 }

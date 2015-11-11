@@ -55,3 +55,31 @@ function load_query_file($path,$vars=array())
         
         return $query;
 }
+
+function load_file($path,$vars=array())
+{
+    
+       
+       $datos= fopen($path, "r");
+       $batch_data=array();
+       
+       $contador=0;
+       $total=0;
+       while(!feof($datos))
+	{
+           
+            $f_datos            =   fgets($datos)           ;
+            $f_datos            =   trim($f_datos,";")      ;
+            $f_datos_array      =   explode(";", $f_datos)  ;
+            
+           
+        
+            
+                $batch_data[$contador]=$f_datos_array;   
+            
+            $total++        ;
+            $contador++     ;
+        }
+    fclose($datos);
+    return $batch_data;
+}

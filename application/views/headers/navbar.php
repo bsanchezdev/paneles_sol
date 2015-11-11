@@ -26,8 +26,8 @@
                 <ul class="dropdown-menu">
                   <li><a href="<?= base_url("/c_p/financoop");?>"><i class="fa fa-circle" style="color: orange;">&nbsp;</i>FINANCOOP</a></li>
                   <li><a href="<?= base_url("/c_p/ripley_c");?>"><i class="fa fa-circle" style="color: orange;">&nbsp;</i>RIPLEY</a></li>
-                  <li><a href="<?= base_url("/c_p/santander_c");?>"><i class="fa fa-lock">&nbsp;</i><i class="fa fa-circle">&nbsp;</i>SANTANDER</a></li>
-                  <li><a href="#<?= base_url("/c_p/uvm");?>" disabled><i class="fa fa-lock">&nbsp;</i><i class="fa fa-circle">&nbsp;</i>UVM</a></li>
+                  <li><a href="<?= base_url("/c_p/santander_c");?>"><i class="fa fa-circle" style="color: orange;">&nbsp;</i>SANTANDER</a></li>
+                  <li><a href="<?= base_url("/c_p/uvm_c");?>" disabled><i class="fa fa-lock">&nbsp;</i><i class="fa fa-circle">&nbsp;</i>UVM</a></li>
                 </ul>
               </li>
               

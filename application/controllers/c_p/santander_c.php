@@ -77,13 +77,22 @@ class Santander_c extends CI_Controller{
    
    public function paso_5()
    {
-       $this->Santander->proc_std();
-       $this->exportar_std();
-        $data["data_html"]=$this->data_html               ;
-        $this->load->view("panel_procesos\santander\proc_1",$data)   ;
+       $this->Santander->proc_std()                                 ;
+       $this->exportar_std()                                        ;
+       
+       $fecha_carga = date("Ymd")                                   ;
+             
+       $data["data_html"]=$this->data_html                          ;
+       $this->load->view("panel_procesos\santander\proc_1",$data)   ;
+       
+         $fecha_carga = date("Ymd")                                   ;
+       $this->Santander->cuadratura($fecha_carga); 
    }
    
-   
+   public function test() {
+       $fecha_carga = date("Ymd")                                   ;
+       $this->Santander->cuadratura($fecha_carga);
+   }
    protected function exportar_bn1()
    {
      /*exportar carbbd BN1*/

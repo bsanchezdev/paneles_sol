@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>SANTANDER</title>
+        <title>UVM</title>
         <?= load_bootstrap_css();?>
     </head>
     <body>
@@ -19,7 +19,7 @@ and open the template in the editor.
                 <div class="col-md-12">
         <div class="panel panel-default">
         <div class="panel-heading">
- <h3 class="panel-title"><i class="fa fa-dashboard">&nbsp;</i>CARGA SITREL SANTANDER</h3>
+ <h3 class="panel-title"><i class="fa fa-dashboard">&nbsp;</i>CARGA SITREL UVM</h3>
         </div>
         <div class="panel-body">
             
@@ -29,7 +29,7 @@ and open the template in the editor.
                 
         <div class="col-md-4 col-lg-4 col-xs-4">
         <div class="row">
-                <div class="col-md-12 col-xs-12"><img src="<?= base_url("/imagenes/santander/santander.gif"); ?>" width="322" height="81" alt="logo-financoop"/></div>
+                <div class="col-md-12 col-xs-12" style="text-align: center;"><img src="<?= base_url("/imagenes/uvm/uvmLogo.png"); ?>" alt="logo-financoop"/></div>
         </div>    
         <ul class="list-group">
             <li class="list-group-item"><a class="btn btn-default form-control" id="init" href="#"><i class="fa fa-gears">&nbsp;</i>Iniciar&nbsp;<i id="Interfaz" class="fa fa-check hidden">&nbsp;</i></a></li>
@@ -38,7 +38,7 @@ and open the template in the editor.
                 
                 
                 <div class="col-md-8 contenedor-datos-ajax">
-                    
+                    ...
                 </div>
             </div>
         </div>
@@ -57,11 +57,17 @@ and open the template in the editor.
         <?= load_bootstrap_js();?>
         
         <script>
-          $("#testuvm").on("click",function()
+          $("#init").on("click",function()
           {
+              
+              var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
+            $(".contenedor-datos-ajax").html(cod);
+            $("#p2").css("display","block");
+            $(".outputpaso" ).html('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+           
               $.ajax({
   type: "POST",
-  url: "<?= base_url("c_p/uvm_c/");?>/",
+  url: "<?= base_url("c_p/uvm_c/iniciar");?>/",
   data: "",
   success: function(data){
     //  $("#carbdd").toggleClass("hidden");
@@ -71,7 +77,7 @@ and open the template in the editor.
             $("#p2").css("display","block");
              $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
            
-     // paso_2();
+     normaliza_modal();
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) { 
     $( ".contenedor-datos-ajax" ).append(XMLHttpRequest.responseText)           ; 
@@ -79,48 +85,14 @@ and open the template in the editor.
 });
           });
         
-        $("#init").on("click",function(e)
-        {
-            $("#Interfaz").toggleClass("hidden");
-            var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
-            $(".contenedor-datos-ajax").html(cod);
-            $("#p2").css("display","block");
-            $(".outputpaso" ).html('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
-           
-    
-    
-    $.ajax({
-  type: "POST",
-  url: "<?= base_url("c_p/santander_c/paso_1");?>/",
-  data: "",
-  success: function(data){
-    //  $("#carbdd").toggleClass("hidden");
-      $( ".contenedor-datos-ajax" ).html( data );
-      var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
-            $(".contenedor-datos-ajax").append(cod);
-            $("#p2").css("display","block");
-             $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
-           
-      paso_2();
-  },
-  error: function(XMLHttpRequest, textStatus, errorThrown) { 
-    $( ".contenedor-datos-ajax" ).append(XMLHttpRequest.responseText)           ; 
-  }
-});
-  /*  
-    $.post( "<?= base_url("c_p/financoop_interfaz/paso2");?>", function( data ) {
-  $( ".contenedor-datos-ajax" ).html( data );
-});*/
-          
-            e.preventDefault();
-        })  ; 
+       
         
-        function paso_2()
+        function normaliza_modal()
         {
             //$this->db_santander->truncate("base_deuda")    
    $.ajax({
   type: "POST",
-  url: "<?= base_url("c_p/santander_c/paso_2");?>/",
+  url: "<?= base_url("c_p/uvm_c/normaliza");?>/",
   data: "",
   success: function(data){
    //   $("#carbdd").toggleClass("hidden");
@@ -133,9 +105,9 @@ and open the template in the editor.
       var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
            // $(".contenedor-datos-ajax").append(cod);
             $("#p2").css("display","block");
-             $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+            $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
            
-      paso_3();
+     
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) { 
     $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
@@ -145,23 +117,10 @@ and open the template in the editor.
         
         function paso_3()
         {
-            //$this->db_santander->truncate("base_deuda")    
-  /* $.ajax({
-  type: "POST",
-  url: "<?= base_url("c_p/santander_c/paso_3");?>/",
-  data: "",
-  success: function(data){
-   //   $("#carbdd").toggleClass("hidden");
-      $( ".contenedor-datos-ajax" ).append( data );      
-  },
-  error: function(XMLHttpRequest, textStatus, errorThrown) { 
-    $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
-  }
-});  */                                                    
-    
+          
     $.ajax({
   type: "POST",
-  url: "<?= base_url("c_p/santander_c/paso_3");?>/",
+  url: "<?= base_url("c_p/uvm_c/carga_base_sitrel");?>/",
   data: "",
   success: function(data){
    //   $("#carbdd").toggleClass("hidden");
@@ -176,7 +135,7 @@ and open the template in the editor.
             $("#p2").css("display","block");
              $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
            
-      paso_4();
+   //   paso_4();
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) { 
     $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
@@ -185,12 +144,12 @@ and open the template in the editor.
         }
         
         
-         function paso_4()
+         function update_pagos()
         {
        
        $.ajax({
   type: "POST",
-  url: "<?= base_url("c_p/santander_c/paso_4");?>/",
+  url: "<?= base_url("c_p/uvm_c/update_pagos");?>/",
   data: "",
   success: function(data){
    //   $("#carbdd").toggleClass("hidden");
@@ -205,7 +164,7 @@ and open the template in the editor.
             $("#p2").css("display","block");
              $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
            
-      paso_5();
+     
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) { 
     $( ".contenedor-datos-ajax" ).append( XMLHttpRequest.responseText );
