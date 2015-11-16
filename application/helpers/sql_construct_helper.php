@@ -57,9 +57,7 @@ function load_query_file($path,$vars=array())
 }
 
 function load_file($path,$vars=array())
-{
-    
-       
+{     
        $datos= fopen($path, "r");
        $batch_data=array();
        

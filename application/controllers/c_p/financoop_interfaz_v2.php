@@ -26,6 +26,11 @@ class Financoop_interfaz_v2 extends CI_Controller{
         $this->load->view("panel_procesos/financoop/interfaz",$data);
     }
       
+    public function indexrobot() {
+        $data="";
+        
+        $this->load->view("panel_procesos/financoop/interfaz_robot",$data);
+    }
     public function importar($diames,$f_archivo,$c_archivo)
     {
         $this->f_archivo=$f_archivo;

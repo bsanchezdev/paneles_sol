@@ -11,9 +11,9 @@
  *
  * @author Desarrollo
  */
-class Uvm_c extends CI_Controller {
-         var $ruta_cbdd      =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\UVM_CARSIT\SALIDA\CARBDD.txt";
-        var $ruta_baja      =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\UVM_CARSIT\SALIDA\baja.csv";
+class uvm_c_robot_panel extends CI_Controller {
+        var $ruta_cbdd      =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\UVM_CARSIT\SALIDA\CARBDD.txt";
+        var $ruta_baja      =   "//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\UVM_CARSIT\SALIDA\baja.txt";
    
     public function __construct() {
         parent::__construct();
@@ -38,7 +38,7 @@ class Uvm_c extends CI_Controller {
     
     public function index() {
         
-        $this->load->view("panel_procesos/uvm/index");
+        $this->load->view("panel_procesos/uvm/index_robot");
     }
     
     public function iniciar() {
@@ -46,15 +46,11 @@ class Uvm_c extends CI_Controller {
         $this->uvm->proc_1($this->data)         ;
         $this->uvm->cuadratura()                ;
         $this->uvm->carga_sitrel()              ;       
-        $this->data_html="";
         echo '<ul class="list-group">';
         foreach ($this->uvm->cuadratura as $key => $value) {
             echo '<li class="list-group-item">'.$value["CONCEPTO"].' <span class="badge">'.$value["CANTIDAD"].'</span></li>' ;
         }
         echo "</ul>";
-        $this->data_html.='<li class="list-group-item">Ejecutando Update Pagos <span id="updpagos" class="badge"><i class="fa fa-spinner fa-spin"></i></span></li>' ;
- $data["data_html"]=$this->data_html               ;
- $this->load->view("panel_procesos\uvm\proc_1",$data)   ;
     }
     
     public function normaliza()
@@ -69,9 +65,6 @@ class Uvm_c extends CI_Controller {
       //  $this->uvm-> proc_update_pagos();
           $this->uvm->update_pagos();
       
-          
-          
-          
         echo "<script> paso_3(); </script>";
     }
     public function carga_base_sitrel() {
@@ -89,6 +82,8 @@ else
    
 }
 
+$this->data_html.='<li class="list-group-item">Ejecutando Update Pagos <span id="updpagos" class="badge"><i class="fa fa-spinner fa-spin"></i></span></li>' ;
+ 
 $this->uvm->baja();
 
 if ( ! write_file($this->ruta_baja, $this->uvm->csv_baja))
@@ -100,12 +95,11 @@ else
     $this->data_html.='<li class="list-group-item">CSV BAJA <span class="badge">OK</span></li>'      ;  
 }
 
+$this->data_html.='<li class="list-group-item">Ejecutando Update Pagos <span id="updpagos" class="badge"><i class="fa fa-spinner fa-spin"></i></span></li>' ;
+ 
 
-
-
-$this->uvm->actualiza_data();
-
-
+$data["data_html"]=$this->data_html               ;
+$this->load->view("panel_procesos\uvm\proc_1",$data)   ;
  echo "<script> $('.progr').remove();  update_pagos(); </script>";
  
     }

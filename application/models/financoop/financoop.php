@@ -397,7 +397,7 @@ $data=$query->result_array() ;
 
 $r=generateCsv($data);
 
-if ( ! write_file($this->ruta."\\carbdd.csv", $r))
+if ( ! write_file($this->ruta."\\carbdd.txt", $r))
 {
      echo '<div class="label label-danger">Error al crear CARBDD</div>';
 }
@@ -468,7 +468,7 @@ FROM marca_salida");
 $data=$query->result_array() ;
 
 $r=generateCsv($data);
-if ( ! write_file($this->ruta."\\marca_salida.csv", $r))
+if ( ! write_file($this->ruta."\\marca_salida.txt", $r))
 {
      echo '<p><div class="label label-danger">Error al crear Marca Salida</div>';
 }

@@ -16,6 +16,7 @@ public function __construct() {
     parent::__construct();
     $this->db_uvm = $this->load->database('uvm', TRUE);
           $this->db_CNB = $this->load->database('CNB', TRUE);
+          $this->db_OPERACIONES = $this->load->database('operaciones', TRUE);
          $this->model_path=APPPATH."models";
 }
 
@@ -292,7 +293,7 @@ public function exportar_deuda()
          $this->norm($value);
     endforeach;
          
-    $rrr=123;
+   
     }
     
     protected function norm($data) {
@@ -329,6 +330,25 @@ public function exportar_deuda()
      );
         $this->db_CNB->query($this->q1);
         
+    }
+    
+    
+    public function baja() {
+        $this->baja =  load_query_file
+     (
+     $this->model_path.'/uvm/baja/q_baja.sql'
+     );
+         $r =       $this->db_uvm->query($this->baja)                   ;
+         $r =       $r->result_array()                                  ;
+         $this->csv_baja=generateCsv($r)                                ; 
+    }
+    public function actualiza_data()
+    {
+        $this->actualiza_data =  load_query_file
+     (
+     $this->model_path.'/uvm/baja/actualiza_data.sql'
+     );
+        $this->db_OPERACIONES->query( $this->actualiza_data);
     }
     }
 
