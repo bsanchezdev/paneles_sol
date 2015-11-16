@@ -105,7 +105,8 @@ else
 
 $this->uvm->actualiza_data();
 
-
+ $data["data_html"]=$this->data_html               ;
+ $this->load->view("panel_procesos\uvm\proc_1",$data)   ;
  echo "<script> $('.progr').remove();  update_pagos(); </script>";
  
     }
