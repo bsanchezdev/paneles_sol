@@ -119,7 +119,7 @@ $db['ripley_sitrel'] = array(
 );
 
 
-$db['odbc']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=naboo;Database=CEDENTES;';
+$db['odbc']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=Saturno;Database=CEDENTES;'; /*desarrollo naboo*/
 $db['odbc']['username'] = 'sa';
 $db['odbc']['password'] = 'One2Three';
 $db['odbc']['database'] = 'CEDENTES';
@@ -137,7 +137,7 @@ $db['odbc']['stricton'] = FALSE;
 $db['odbc']['schema']   = "dbo";
 
 
-$db['operaciones']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=saturno;Database=OPERACIONES;';
+$db['operaciones']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=Saturno;Database=OPERACIONES;';
 $db['operaciones']['username'] = 'sa';
 $db['operaciones']['password'] = 'One2Three';
 $db['operaciones']['database'] = 'OPERACIONES';
@@ -155,7 +155,7 @@ $db['operaciones']['stricton'] = FALSE;
 $db['operaciones']['schema']   = "dbo";
 
 
-$db['CNB']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=naboo;Database=CNB;';
+$db['CNB']['hostname'] = 'Driver={SQL Server Native Client 10.0};Server=Saturno;Database=CNB;'; //naboo test
 $db['CNB']['username'] = 'sa';
 $db['CNB']['password'] = 'One2Three';
 $db['CNB']['database'] = 'CNB';

@@ -7,27 +7,25 @@
  */
 
 /**
- * Description of financoop_interfaz
+ * Description of financop_interfaz_v2
  *
  * @author Desarrollo
  */
-class Financoop_interfaz extends CI_Controller{
+class Financoop_interfaz_v2 extends CI_Controller{
     public function __construct() {
         parent::__construct();
         $this->load->helper("file");
+        $this->load->helper("caracteres");
+                 $this->load->helper("sql_construct");
         $this->load->model("financoop/financoop");
         ini_set('max_execution_time', -1);
     }
-    
-    public function index() {
-       /* $data="";
-        $this->load->view("panel_procesos/financoop/interfaz",$data);*/
+     public function index() {
+        $data="";
+        
+        $this->load->view("panel_procesos/financoop/interfaz",$data);
     }
-    public function paso2()
-    {
-        $this->financoop->p2();
-    }
-    /*
+      
     public function importar($diames,$f_archivo,$c_archivo)
     {
         $this->f_archivo=$f_archivo;
@@ -65,8 +63,44 @@ class Financoop_interfaz extends CI_Controller{
        $data["registros_insertados"]=$this->financoop->insertados;
        $this->load->view("panel_procesos/financoop/salida_importar",$data);
     }
+    protected function leer_archivo($archivo,$flag,$diames)
+    {
+   $arch=    $archivo["relative_path"].'\\'.$archivo["name"];
+        // echo "*".$arch."<br>";   
+       $datos= fopen($arch, "r");
+       $batch_data=array();
+       
+       $contador=0;
+       $total=0;
+       while(!feof($datos))
+	{
+           
+            $f_datos            =   fgets($datos)           ;
+            $f_datos            =   trim($f_datos,";")      ;
+            $f_datos_array      =   explode(";", $f_datos)  ;
+            
+            //$this->f_archivo
+            $arch=str_replace(".TXT","",$archivo["name"])  ;
+            $arch=str_replace(".txt","",$arch)  ;
+            $arch.=" ".  $this->f_archivo;
+            $f_datos_array[]    =   $arch      ;
+            if(isset($f_datos_array[5])&&$f_datos_array[5]!=""):
+                $batch_data[$contador]=$f_datos_array;   
+            endif;
+            if($flag=="telefonos"):
+                $batch_data[$contador]=$f_datos_array;
+            endif;
+            $total++        ;
+            $contador++     ;
+        }
+    fclose($datos);
+   
+   // $this->insert_batch_("dia_".$flag,$batch_data);
+    $this->financoop->importar($diames."_".$flag,$batch_data,$this->c_archivo);
+    }
     
-     public function importar_mes($f_archivo,$c_archivo)
+    /**/
+      public function importar_mes($f_archivo,$c_archivo)
     {
         $this->f_archivo=$f_archivo;
         $this->c_archivo=$c_archivo;
@@ -104,66 +138,12 @@ class Financoop_interfaz extends CI_Controller{
        $this->load->view("panel_procesos/financoop/salida_importar",$data);
     }
     
-    protected function leer_archivo($archivo,$flag,$diames)
-    {
-   $arch=    $archivo["relative_path"].'\\'.$archivo["name"];
-        // echo "*".$arch."<br>";   
-       $datos= fopen($arch, "r");
-       $batch_data=array();
-       
-       $contador=0;
-       $total=0;
-       while(!feof($datos))
-	{
-           
-            $f_datos            =   fgets($datos)           ;
-            $f_datos            =   trim($f_datos,";")      ;
-            $f_datos_array      =   explode(";", $f_datos)  ;
-            
-            //$this->f_archivo
-            $arch=str_replace(".TXT","",$archivo["name"])  ;
-            $arch=str_replace(".txt","",$arch)  ;
-            $arch.=" ".  $this->f_archivo;
-            $f_datos_array[]    =   $arch      ;
-            if(isset($f_datos_array[5])&&$f_datos_array[5]!=""):
-                $batch_data[$contador]=$f_datos_array;   
-            endif;
-            if($flag=="telefonos"):
-                $batch_data[$contador]=$f_datos_array;
-            endif;
-            $total++        ;
-            $contador++     ;
-        }
-    fclose($datos);
-   
-   // $this->insert_batch_("dia_".$flag,$batch_data);
-    $this->financoop->importar($diames."_".$flag,$batch_data,$this->c_archivo);
-    }
     
-    private function insert_batch_($tabla,$array)
-    {
-        $query();
-        $data="";
-        foreach ($array as $key => $value) {
-            
-            $data.="(";
-            foreach ($value as $key_ => $value_) {
-                $data.=$value_.",";
-            }
-            $data=  trim($data,",");
-            $data.="),";
-            $r=$value;
-        }
-        $data=  trim($data,",");
-        
-        $query = "insert into $tabla values $data";
-    }
     
     public function total($f_archivo,$c_archivo)
     {
         $this->financoop->borrar_para_total();
         $this->financoop->anexar_para_total();
         echo "Proceso terminado";
-    }*/
-    
     }
+}

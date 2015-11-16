@@ -73,8 +73,6 @@ protected function inserta($tabla,$value)
 public function cuadratura()
 {
     
-    
-    
     $this->db_uvm->truncate("cuadratura")                       ;
     
     $this->cuadratura_alumnos =  load_query_file
@@ -276,11 +274,62 @@ public function exportar_deuda()
     public function update_pagos() {
           $this->update_pagos =  load_query_file
      (
-     $this->model_path.'/uvm/normalizar/update_pagos.sql'
+     $this->model_path.'/uvm/normalizar/update_pagos_orig.sql'
      );
     $this->db_uvm->query($this->update_pagos) ;
     }
     
+    public function proc_update_pagos()
+    {
+        $this->get_data_carga =  load_query_file
+     (
+     $this->model_path.'/uvm/normalizar/get_data_carga.sql'
+     );
+    $r=$this->db_uvm->query($this->get_data_carga) ;
+     $r=$r->result_array()            ;
+     
+    foreach ($r as $key => $value):
+         $this->norm($value);
+    endforeach;
+         
+    $rrr=123;
+    }
+    
+    protected function norm($data) {
+        $var=array(
+            "%cuota%"       =>  $data["CUOTA"]      ,
+            "%operacion%"   =>  $data["OPERACION"]  ,
+            "%rut%"         =>  $data["RUT"]                
+                );
+        $this->data_normalizar_pagos =  load_query_file
+     (
+     $this->model_path.'/uvm/normalizar/data_normalizar_pagos.sql',$var
+     );
+         $r =       $this->db_uvm->query($this->data_normalizar_pagos)  ;
+         $r =       $r->result_array()                                  ;
+         if(count($r)>0):
+             
+        $this->update_cuota =  load_query_file
+     (
+     $this->model_path.'/uvm/normalizar/update_cuota.sql',$var
+     );
+         $this->db_uvm->query($this->update_cuota) ;
+         endif;
+         
+         
+    }
+    
+    
+    public function proc_query()
+    {
+        $this->db_CNB->truncate("UVM_RG_PAGOS_SITREL");
+        $this->q1 =  load_query_file
+     (
+     $this->model_path.'/uvm/query/q1.sql'
+     );
+        $this->db_CNB->query($this->q1);
+        
+    }
     }
 
     

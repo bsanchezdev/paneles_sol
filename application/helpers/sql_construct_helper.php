@@ -12,7 +12,7 @@ function construir_array_de_inserts($adata=null,$tabla=null,$insert="INSERT INTO
             {
                $value_=  str_replace("'", '´', $value_)         ;
                $value_=trim($value_);
-               $data.="'".f_remove_odd_characters($value_)."'," ;
+               $data.="'".  utf8_encode($value_)."'," ;
               }
             $data=trim($data,",")               ;
             $data=$data."),"                    ;

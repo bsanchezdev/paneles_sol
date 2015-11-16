@@ -90,7 +90,7 @@ border-color: #646C74 !important;background-image:none !important;}
             e.preventDefault();
           $.ajax({
   type: "POST",
-  url: "<?=base_url("c_p/financoop_interfaz/importar/MES");?>/"+$("#f_archivo").val()+"/"+$("#f_carga").val(),
+  url: "<?=base_url("c_p/financoop_interfaz_v2/importar/MES");?>/"+$("#f_archivo").val()+"/"+$("#f_carga").val(),
   data: "",
   success: function(data){
        $( ".out-info-importar" ).html( data );
@@ -109,7 +109,7 @@ border-color: #646C74 !important;background-image:none !important;}
              e.preventDefault();
             $.ajax({
   type: "POST",
-  url: "<?=base_url("c_p/financoop_interfaz/importar_mes/");?>/"+$("#f_archivo").val()+"/"+$("#f_carga").val(),
+  url: "<?=base_url("c_p/financoop_interfaz_v2/importar_mes/");?>/"+$("#f_archivo").val()+"/"+$("#f_carga").val(),
   data: "",
   success: function(data){
        $( ".out-info-mes" ).html( data );
@@ -134,7 +134,7 @@ border-color: #646C74 !important;background-image:none !important;}
             e.preventDefault();
           $.ajax({
   type: "POST",
-  url: "<?=base_url("c_p/financoop_interfaz/total");?>/"+$("#f_archivo").val()+"/"+$("#f_carga").val(),
+  url: "<?=base_url("c_p/financoop_interfaz_v2/total");?>/"+$("#f_archivo").val()+"/"+$("#f_carga").val(),
   data: "",
   success: function(data){
        $( ".out-info-total" ).html( data );

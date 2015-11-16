@@ -63,7 +63,7 @@ and open the template in the editor.
             
           //  $("#Interfaz").toggleClass("hidden");
           //  $("#carbdd").toggleClass("hidden");
-            $.post( "<?= base_url("c_p/financoop_interfaz");?>", function( data ) {
+            $.post( "<?= base_url("c_p/financoop_interfaz_v2");?>", function( data ) {
   $( ".contenedor-datos-ajax" ).html( data );
 });
           

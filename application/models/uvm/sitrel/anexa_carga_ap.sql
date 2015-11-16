@@ -1,4 +1,4 @@
-INSERT INTO CARGA (
+INSERT ignore INTO CARGA (
 	RUT,
 	DV,
 	NOMBRE,
@@ -10,16 +10,12 @@ INSERT INTO CARGA (
 	TIPO_DEUDOR,
 	MARCA,
 	PAGADO
-) SELECT
+) SELECT distinct
 deuda.RUT_TUTOR,
 deuda.DIGITO_VERIFICADOR_TUTOR,
 deuda.NOMBRE_TUTOR,
 concat("00" , LEFT (
-		deuda.NUMERO_OPERACION, (
-			InStr(
-				deuda.NUMERO_OPERACION, "-"
-			)
-		) - 1
+		deuda.NUMERO_OPERACION, ( InStr( deuda.NUMERO_OPERACION, "-" ) ) - 1
 	)) AS Expr1,
 deuda.NUMERO_DE_CUOTA,
 "PAGARE" AS Expr4,

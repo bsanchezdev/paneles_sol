@@ -20,7 +20,7 @@
          
          <div class = "modal-body">
              <label>Ingrese el periodo</label>
-             <input type="text" class="form-control periodo" value="<?php echo date("Ymd")?>" placeholder="201510" required/>
+             <input type="text" class="form-control periodo" value="20100101" placeholder="201510" required/>
              <label>Ingrese Fecha de carga</label>
              <input type="text" class="form-control fcarga" placeholder="201510" required value="<?php echo date("Ymd")?>"/>
          </div>
@@ -56,7 +56,7 @@ $(".contenedor-datos-ajax").prepend('<div class="progr" style="height: 20px; wid
   data: "",
   success: function(data){
      
-      $( ".contenedor-datos-ajax" ).html( data );
+      $( ".contenedor-datos-ajax" ).append( data );
       
   },
   error: function(XMLHttpRequest, textStatus, errorThrown) {

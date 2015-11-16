@@ -51,13 +51,18 @@ class Uvm_c extends CI_Controller {
         echo "</ul>";
     }
     
-    public function normaliza() {
+    public function normaliza()
+    {
         $this->load->view("panel_procesos/uvm/modal_periodo");
-            
-       
     }
     public function norm($fi,$ft) {
-        $this->uvm->normalizar($fi,$ft)                ;    
+        
+        
+        $this->uvm->proc_query();
+        $this->uvm->normalizar($fi,$ft)                ;   
+      //  $this->uvm-> proc_update_pagos();
+          $this->uvm->update_pagos();
+      
         echo "<script> paso_3(); </script>";
     }
     public function carga_base_sitrel() {
@@ -74,14 +79,17 @@ else
     $this->data_html.='<li class="list-group-item">CARBDD <span class="badge">OK</span></li>'      ;
    
 }
+
+$this->data_html.='<li class="list-group-item">Ejecutando Update Pagos <span id="updpagos" class="badge"><i class="fa fa-spinner fa-spin"></i></span></li>' ;
  $data["data_html"]=$this->data_html               ;
 $this->load->view("panel_procesos\uvm\proc_1",$data)   ;
- echo "<script> update_pagos(); </script>";
+ echo "<script> $('.progr').remove();  update_pagos(); </script>";
  
     }
     
     
     public function update_pagos() {
-        $this->uvm->update_pagos();
+     //   $this->uvm->update_pagos();
+       echo "<script>$('#updpagos').html('OK');</script>";
     }
 }

@@ -17,9 +17,11 @@ class Financoop extends CI_Model{
     var $ruta="//199.69.69.93\interfaces_cedentes\Cargas Procesos\APLICACIONES\FIC_CARSIT\Salida";
     public function __construct() {
         parent::__construct();
+        $this->model_path=APPPATH."models";
       $this->load_saturno(); 
       $this->load_operaciones();
         $this->load->helper("caracteres");
+        $this->load->helper("sql_construct");
     }
     
     public function anexar_DW()
@@ -36,6 +38,13 @@ class Financoop extends CI_Model{
     }
     public function importar($tabla,$data,$c_archivo)
     {
+        $this->db->truncate($tabla);
+        
+       /* $tablam=  str_replace("dia", "mes", $tabla);
+        $this->db->truncate($tablam);
+        $tablam=  str_replace("mes", "dia", $tabla);
+        $this->db->truncate($tablam);*/
+        
         $this->c_archivo=$c_archivo;
         if(count($data)>0):
            $query= $this->insert_batch__($tabla,$data);
@@ -354,203 +363,41 @@ FROM CARGA;
          */
         $this->db->truncate("carga");
         
-        $anexa_carga_ap='INSERT IGNORE INTO CARGA (
-	RUT,
-	DV,
-	NOMBRE,
-	OPERACIÓN,
-	CUOTA,
-	PRODUCTO,
-	VENCE, 
-        MONTO,
-	TIPO_DEUDOR
-) 
-SELECT distinct
-	
-		LEFT (
-			RIGHT (
-				TOTAL_SOCIOS.RutCliente, 9
-			),
-			8
-		)
-	 AS Expr4,
-	RIGHT (
-		TOTAL_SOCIOS.RutCliente, 1
-	) AS Expr5,
-	concat(TOTAL_SOCIOS.Nombre_Cliente ," " , TOTAL_SOCIOS.apellido_Paterno , " " , TOTAL_SOCIOS.Apellido_Materno) AS Expr6,
-	TOTAL_DEUDA.Operación,
-	TOTAL_CUOTAS.Numero_de_Cuota,
-	"PAGARE" AS Expr2,
-	concat(RIGHT (TOTAL_CUOTAS.Fecha_de_Vencimiento, 4) , Mid(TOTAL_CUOTAS.Fecha_de_Vencimiento, 4,2), LEFT (TOTAL_CUOTAS.Fecha_de_Vencimiento, 2)) AS Expr3,
-	TOTAL_CUOTAS.Monto_Cuota AS Expr7,
-	1 AS Expr1
-FROM
-	(
-		TOTAL_SOCIOS
-		INNER JOIN TOTAL_DEUDA ON TOTAL_SOCIOS.RutCliente = TOTAL_DEUDA.RutCliente
-	)
-INNER JOIN TOTAL_CUOTAS ON (
-	TOTAL_DEUDA.Operación = TOTAL_CUOTAS.Operación
-)
-AND (
-	TOTAL_DEUDA.RutCliente = TOTAL_CUOTAS.RutCliente
-)
-WHERE
-	(
-		(
-			(
-				TOTAL_CUOTAS.Estado_de_la_cuota
-			) <> "2"
-		)
-	)
-';
+     $this->anexa_carga_ap =  load_query_file
+     ( $this->model_path.'/financoop/paso2/anexa_carga_ap.sql')   ;
+     $this->db->query($this->anexa_carga_ap)            ;
         
-        $this->db->query($anexa_carga_ap);
         
-$anexa_carga_al='INSERT IGNORE INTO CARGA ( RUT, DV, NOMBRE, OPERACIÓN, CUOTA, PRODUCTO, VENCE, MONTO, TIPO_DEUDOR )
-    SELECT distinct
-	
-		LEFT (
-			RIGHT (TOTAL_AVAL.RutCliente, 9),
-			8
-		)
-	 AS Expr4,
-	RIGHT (TOTAL_AVAL.RutCliente, 1) AS Expr5,
-	concat(TOTAL_AVAL.Nombre_Cliente , " " , TOTAL_AVAL.Apellido_Paterno , " " , TOTAL_AVAL.Apellido_Materno) AS Expr6,
-	TOTAL_DEUDA.Operación,
-	TOTAL_CUOTAS.Numero_de_Cuota,
-	"PAGARE" AS Expr2,
-	RIGHT (
-		TOTAL_CUOTAS.Fecha_de_Vencimiento, 4
-	) & Mid(
-		TOTAL_CUOTAS.Fecha_de_Vencimiento, 4,
-		2
-	) & LEFT (
-		TOTAL_CUOTAS.Fecha_de_Vencimiento, 2
-	) AS Expr3,
-	TOTAL_CUOTAS.Monto_Cuota AS Expr7,
-	"A" AS Expr1
-FROM
-	TOTAL_AVAL
-INNER JOIN (
-	TOTAL_DEUDA
-	INNER JOIN TOTAL_CUOTAS ON (
-		TOTAL_DEUDA.Operación = TOTAL_CUOTAS.Operación
-	)
-	AND (
-		TOTAL_DEUDA.RutCliente = TOTAL_CUOTAS.RutCliente
-	)
-) ON TOTAL_AVAL.RutCliente = TOTAL_DEUDA.Rut_Aval
-WHERE
-	(
-		(
-			(
-				TOTAL_CUOTAS.Estado_de_la_cuota
-			) <> "2"
-		)
-	);
+$this->anexa_carga_al= load_query_file
+     ( $this->model_path.'/financoop/paso2/anexa_carga_al.sql')     ;
+     $this->db->query($this->anexa_carga_al)                        ;
 
-';
-$this->db->query($anexa_carga_al);
-
-
-$telefonos="insert IGNORE into FONOS_DEPURADOS
-SELECT
-	
-		LEFT (
-			RIGHT (
-				TOTAL_TELEFONOS.RutCliente , 9
-			),
-			8
-		)
-	 AS RUT,
-	TOTAL_TELEFONOS.Tipo_de_telefóno,
-	
-		 TOTAL_TELEFONOS.Código_de_área 
-	 AS CA,
-	TOTAL_TELEFONOS.Teléfono_ 
-FROM
-	TOTAL_TELEFONOS;
-
-";
-$this->db->query($telefonos);
+$this->anexa_telefonos=load_query_file
+     ( $this->model_path.'/financoop/paso2/anexa_telefonos.sql')     ;
+     $this->db->query($this->anexa_telefonos)                        ;
 
 
 
 $this->db->truncate("base_deuda");
-$carbdd='INSERT INTO BASE_DEUDA (
-	RUT,
-	DV,
-	NOMBRE,
-	direcc,
-	telefono,
-	ciudad,
-	comuna,
-	OPERACIÓN,
-	CUOTA,
-	PRODUCTO,
-	VENCE, 
-  moneda,
-	MONTO,
-	sucursal,
-	cartera,
-	sald_ins,
-	tipo_deu,
-	semestre,
-	montoopera,
-	observacio,
-	categoria,
-	segmento,
-	año,
-	tipo_cred,
-	descrip,
-	montocheqprotestado,
- CEDENTE
-) SELECT
-	CARGA.RUT,
-	CARGA.DV,
-	CARGA.NOMBRE,
-	"" AS direcc,
-	"" AS telefono,
-	"" AS ciudad,
-	"" AS comuna,
-	CARGA.OPERACIÓN,
-	CARGA.CUOTA,
-	CARGA.PRODUCTO,
-	CARGA.VENCE
-  , 1 AS moneda,
-	CARGA.MONTO,
-	"MATRIZ" AS sucursal,
-	"" AS cartera,
-	"0" AS sald_ins,
-	CARGA.TIPO_DEUDOR,
-	"" AS semestre,
-	"0" AS montoopera,
-	"" AS observacio,
-	"" AS categoria,
-	"" AS segmento,
-	"" AS año,
-	"" AS tipo_cred,
-	CARGA.MARCA,
-	"0" AS "Monto Cheq Protestado", CARGA.CEDENTE
-FROM
-	CARGA;
+$carbdd='';
+$this->base_deuda=load_query_file
+     ( $this->model_path.'/financoop/paso2/base_deuda.sql')     ;
+     $this->db->query($this->base_deuda)                        ;
 
-';
-$this->db->query($carbdd);
+
+//$this->db->query($carbdd);
 $carbdd_csv='SELECT *
 FROM base_deuda
 INTO OUTFILE "d:\carbdd-out.csv"';
 //$this->db->query($carbdd_csv);
 
 //copy("d:\carbdd-out.csv", $ruta."\\carbdd_out.csv");
-$query = $this->db->query("SELECT *
-FROM base_deuda");
+$query = $this->db->query("SELECT * FROM base_deuda");
 $data=$query->result_array() ;
 
 $r=generateCsv($data);
 
-if ( ! write_file($this->ruta."\\carbdd_out.csv", $r))
+if ( ! write_file($this->ruta."\\carbdd.csv", $r))
 {
      echo '<div class="label label-danger">Error al crear CARBDD</div>';
 }
@@ -621,7 +468,7 @@ FROM marca_salida");
 $data=$query->result_array() ;
 
 $r=generateCsv($data);
-if ( ! write_file($this->ruta."\\marca_salida_out.csv", $r))
+if ( ! write_file($this->ruta."\\marca_salida.csv", $r))
 {
      echo '<p><div class="label label-danger">Error al crear Marca Salida</div>';
 }

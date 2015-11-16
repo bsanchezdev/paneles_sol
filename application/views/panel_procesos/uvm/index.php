@@ -146,7 +146,11 @@ and open the template in the editor.
         
          function update_pagos()
         {
-       
+    /*    var cod='<div id="p2" style="display: none" class="panel panel-default"><div class="panel-heading"></div><div class="outputpaso"></div></div>';
+            $(".contenedor-datos-ajax").html(cod);
+            $("#p2").css("display","block");
+            $(".outputpaso" ).append('<span>&nbsp;Procesando...</span><img style="height: 25px; width: 100px;" src="<?=base_url('/imagenes/6C59C7124.gif');?>" width="100%"/>' );
+        */   
        $.ajax({
   type: "POST",
   url: "<?= base_url("c_p/uvm_c/update_pagos");?>/",
